@@ -1,0 +1,150 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Auth Service APIs",
+    "description": "APIs for Authentication and Authorization Services",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5001",
+      "description": "Server for Auth Services"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "APIs related to User Authentication and Registration"
+    }
+  ],
+  "paths": {
+    "/api/auth/register": {
+      "post": {
+        "tags": ["Authentication & Authorization"],
+        "summary": "Registering a new user",
+        "description": "An endpoint to register a new user with email and password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "type": "object",
+              "schema": {
+                "type": "object",
+                "required": [
+                  "firstName",
+                  "lastName",
+                  "email",
+                  "password",
+                  "role"
+                ],
+                "properties": {
+                  "firstName": {
+                    "type": "string",
+                    "example": "Yvan"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "example": "NKILIYE Rubuto"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "yvankiliye.rubuto@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 6,
+                    "example": "password123"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": ["USER", "ADMIN"],
+                    "example": "USER"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User successfully registered!!"
+                    },
+                    "userId": {
+                      "type": "number",
+                      "example": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": ["Authentication & Authorization"],
+        "summary": "Logging in user",
+        "description": "An endpoint to create a seesion for the user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "type": "object",
+              "schema": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "yvankiliye.rubuto@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 6,
+                    "example": "Nry369&2008"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "example": "yvankiliye.rubuto@gmail.com"
+                    },
+                    "token": {
+                      "type": "string",
+                      "example": "8+RJ2+1lkzNWoZODjgmO4kBYASz9IFjlbMFnSprB/OA8gsVvkPD6vi8WFqTFKqoUE1sWj86Fk/IPFQ3Cwpuf2Q=="
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "components": {},
+  "security": []
+}

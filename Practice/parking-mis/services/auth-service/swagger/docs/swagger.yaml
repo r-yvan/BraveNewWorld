@@ -1,0 +1,17 @@
+openapi: 3.0.0
+info:
+  title: Auth Service API
+  version: 1.0.0
+paths:
+  /api/auth/register:
+    post:
+      summary: Register a user
+      responses:
+        "201":
+          description: User registered
+  /api/auth/login:
+    post:
+      summary: Login a user
+      responses:
+        "200":
+          description: User logged in
