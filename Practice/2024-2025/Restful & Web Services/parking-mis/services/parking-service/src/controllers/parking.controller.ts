@@ -42,7 +42,7 @@ export const getAllParkings = async (request: Request, response: Response) => {
 
 export const getParkingById = async (request: Request, response: Response) => {
   try {
-    const id = parseInt(request.params.id);
+    const id = parseInt(request.params.id as string);
     if (isNaN(id)) {
       response.status(400).json({ message: "Invalid parking ID" });
       return;
@@ -67,7 +67,7 @@ export const updateParking = async (request: Request, response: Response) => {
       return;
     }
 
-    const id = parseInt(request.params.id);
+    const id = parseInt(request.params.id as string);
     if (isNaN(id)) {
       response.status(400).json({ message: "Invalid parking ID" });
       return;
@@ -87,7 +87,7 @@ export const updateParking = async (request: Request, response: Response) => {
 
 export const deleteParking = async (request: Request, response: Response) => {
   try {
-    const id = parseInt(request.params.id);
+    const id = parseInt(request.params.id as string);
     if (isNaN(id)) {
       response.status(400).json({ message: "Invalid parking ID" });
       return;

@@ -45,7 +45,7 @@ export const registerCarEntry = async (request: Request, response: Response) => 
 
 export const registerCarExit = async (request: Request, response: Response) => {
   try {
-    const id = parseInt(request.params.id);
+    const id = parseInt(request.params.id as string);
     if (isNaN(id)) {
       response.status(400).json({ message: "Invalid entry ID" });
       return;
@@ -78,7 +78,7 @@ export const registerCarExit = async (request: Request, response: Response) => {
 
 export const getTicket = async (request: Request, response: Response) => {
   try {
-    const id = parseInt(request.params.id);
+    const id = parseInt(request.params.id as string);
     if (isNaN(id)) {
       response.status(400).json({ message: "Invalid entry ID" });
       return;
@@ -110,7 +110,7 @@ export const getAllCarEntries = async (request: Request, response: Response) => 
 
 export const getCarEntryById = async (request: Request, response: Response) => {
   try {
-    const id = parseInt(request.params.id);
+    const id = parseInt(request.params.id as string);
     if (isNaN(id)) {
       response.status(400).json({ message: "Invalid entry ID" });
       return;

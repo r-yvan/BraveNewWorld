@@ -27,6 +27,7 @@ export const authenticateUser = (
       id: decodedPayload.id,
       role: decodedPayload.role,
     };
+    next();
   } catch (error) {
     response.status(401).json({ message: "Unauthorized!! Invalid token" });
   }
