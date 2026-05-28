@@ -1,0 +1,67 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Report Service APIs",
+    "description": "APIs for Generating Parking Reports",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5004",
+      "description": "Server for Report Services"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Reports",
+      "description": "APIs for generating reports"
+    }
+  ],
+  "paths": {
+    "/api/reports/outgoing": {
+      "get": {
+        "tags": ["Reports"],
+        "summary": "Get outgoing cars report",
+        "description": "Admin only - Get a report of cars that have exited between specific dates with total charged amount",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "startDate", "in": "query", "required": true, "schema": { "type": "string", "format": "date-time" } },
+          { "name": "endDate", "in": "query", "required": true, "schema": { "type": "string", "format": "date-time" } },
+          { "name": "page", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "default": 10 } }
+        ],
+        "responses": {
+          "200": { "description": "Outgoing cars report" },
+          "400": { "description": "Invalid date range" }
+        }
+      }
+    },
+    "/api/reports/entered": {
+      "get": {
+        "tags": ["Reports"],
+        "summary": "Get entered cars report",
+        "description": "Admin only - Get a report of cars that have entered between specific dates",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "startDate", "in": "query", "required": true, "schema": { "type": "string", "format": "date-time" } },
+          { "name": "endDate", "in": "query", "required": true, "schema": { "type": "string", "format": "date-time" } },
+          { "name": "page", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "default": 10 } }
+        ],
+        "responses": {
+          "200": { "description": "Entered cars report" },
+          "400": { "description": "Invalid date range" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

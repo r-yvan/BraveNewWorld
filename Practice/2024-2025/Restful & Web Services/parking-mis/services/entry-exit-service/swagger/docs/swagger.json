@@ -1,0 +1,132 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Entry-Exit Service APIs",
+    "description": "APIs for Managing Car Entry and Exit in Parking",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5003",
+      "description": "Server for Entry-Exit Services"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Car Entry/Exit",
+      "description": "APIs for managing car entry and exit"
+    }
+  ],
+  "paths": {
+    "/api/entries": {
+      "get": {
+        "tags": ["Car Entry/Exit"],
+        "summary": "Get all car entries",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "page", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "default": 10 } }
+        ],
+        "responses": { "200": { "description": "List of car entries" } }
+      },
+      "post": {
+        "tags": ["Car Entry/Exit"],
+        "summary": "Register car entry",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["plateNumber", "parkingCode"],
+                "properties": {
+                  "plateNumber": { "type": "string", "example": "RAD 123 A" },
+                  "parkingCode": { "type": "string", "example": "PKG-001" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Car entry registered with ticket" },
+          "409": { "description": "Car already parked" }
+        }
+      }
+    },
+    "/api/entries/active": {
+      "get": {
+        "tags": ["Car Entry/Exit"],
+        "summary": "Get active (parked) entries",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "page", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "default": 10 } }
+        ],
+        "responses": { "200": { "description": "List of active entries" } }
+      }
+    },
+    "/api/entries/{id}": {
+      "get": {
+        "tags": ["Car Entry/Exit"],
+        "summary": "Get entry by ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Entry details" },
+          "404": { "description": "Entry not found" }
+        }
+      }
+    },
+    "/api/entries/{id}/ticket": {
+      "get": {
+        "tags": ["Car Entry/Exit"],
+        "summary": "Get entry ticket",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "Ticket details" } }
+      }
+    },
+    "/api/entries/{id}/exit": {
+      "put": {
+        "tags": ["Car Entry/Exit"],
+        "summary": "Register car exit",
+        "description": "Register car exit and generate bill",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["chargingFeePerHour"],
+                "properties": {
+                  "chargingFeePerHour": { "type": "number", "example": 500 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Car exit registered with bill" },
+          "404": { "description": "Entry not found" },
+          "409": { "description": "Car already exited" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

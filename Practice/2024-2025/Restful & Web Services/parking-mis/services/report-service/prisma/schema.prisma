@@ -1,0 +1,20 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Report service reads from CarEntry table (shared DB)
+model CarEntry {
+  id            Int       @id @default(autoincrement())
+  plateNumber   String
+  parkingCode   String
+  entryDateTime DateTime  @default(now())
+  exitDateTime  DateTime?
+  chargedAmount Float     @default(0)
+  ticketNumber  String    @unique @default(uuid())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}

@@ -1,0 +1,130 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Parking Service APIs",
+    "description": "APIs for Managing Parking Locations",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5002",
+      "description": "Server for Parking Services"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Parking Management",
+      "description": "APIs for managing parking locations"
+    }
+  ],
+  "paths": {
+    "/api/parkings": {
+      "get": {
+        "tags": ["Parking Management"],
+        "summary": "Get all parkings",
+        "description": "Get all parking locations with pagination",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "page", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "default": 10 } }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of parkings with pagination"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Parking Management"],
+        "summary": "Register a new parking",
+        "description": "Admin only - Register a new parking location",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["code", "name", "totalSpaces", "location", "chargingFeePerHour"],
+                "properties": {
+                  "code": { "type": "string", "example": "PKG-001" },
+                  "name": { "type": "string", "example": "Kigali City Tower Parking" },
+                  "totalSpaces": { "type": "integer", "example": 100 },
+                  "location": { "type": "string", "example": "KN 5 Rd, Kigali" },
+                  "chargingFeePerHour": { "type": "number", "example": 500 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Parking registered successfully" },
+          "409": { "description": "Parking with this code already exists" }
+        }
+      }
+    },
+    "/api/parkings/{id}": {
+      "get": {
+        "tags": ["Parking Management"],
+        "summary": "Get parking by ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Parking details" },
+          "404": { "description": "Parking not found" }
+        }
+      },
+      "put": {
+        "tags": ["Parking Management"],
+        "summary": "Update parking",
+        "description": "Admin only - Update parking details",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "totalSpaces": { "type": "integer" },
+                  "location": { "type": "string" },
+                  "chargingFeePerHour": { "type": "number" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Parking updated successfully" },
+          "404": { "description": "Parking not found" }
+        }
+      },
+      "delete": {
+        "tags": ["Parking Management"],
+        "summary": "Delete parking",
+        "description": "Admin only - Delete a parking location",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Parking deleted successfully" },
+          "404": { "description": "Parking not found" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

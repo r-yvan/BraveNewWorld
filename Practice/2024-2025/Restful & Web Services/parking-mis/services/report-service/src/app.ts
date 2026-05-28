@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "../swagger/docs/swagger.json";
 
-import parkingRoutes from "./routes/parking.route";
+import reportRoutes from "./routes/report.route";
 import { errorHandler } from "./middleware/error.middleware";
 
 dotenv.config();
@@ -17,7 +17,7 @@ app.use(helmet());
 app.use(morgan("dev"));
 app.use(express.json());
 
-app.use("/api/parkings", parkingRoutes);
+app.use("/api/reports", reportRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(errorHandler);
