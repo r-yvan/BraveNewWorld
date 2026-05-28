@@ -6,5 +6,8 @@ export const errorHandler = (
   response: Response,
   next: NextFunction,
 ) => {
-  response.status(500).json({ message: "Internal server error!!" });
+  console.error("Error occurred:", error);
+  const status = error.status || 500;
+  const message = error.message || "Internal server error!!";
+  response.status(status).json({ message, error: process.env.NODE_ENV === 'development' ? error : undefined });
 };

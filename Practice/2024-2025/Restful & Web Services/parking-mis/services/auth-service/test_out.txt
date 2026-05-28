@@ -1,0 +1,26 @@
+Error: PrismaClientValidationError: 
+Invalid `prisma.user.create()` invocation in
+/media/r-yvan/Personal Disk/Coding/National Exams/BraveNewWorld/Practice/2024-2025/Restful & Web Services/parking-mis/services/auth-service/src/services/auth.service.ts:17:37
+
+  14 if (existingUser) throw new Error("User with this email already exists");
+  15 
+  16 const hashedPassword = await bcrypt.hash(password, 10);
+→ 17 const newUser = await prisma.user.create({
+       data: {
+         firstName: "Yvan",
+         lastName: "Rubuto",
+         email: "yvankiliye.rubuto@gmail.com",
+         password: "$2b$10$8R47wz/DbBtewZEya2vnG.JqF5iKnqAwcxaE8vqyGFStiFdlYTFG2",
+         role: "PARKING_ATTENDANT"
+               ~~~~~~~~~~~~~~~~~~~
+       }
+     })
+
+Invalid value for argument `role`. Expected Role.
+    at throwValidationException (/media/r-yvan/Personal Disk/Coding/National Exams/BraveNewWorld/Practice/2024-2025/Restful & Web Services/parking-mis/services/auth-service/node_modules/@prisma/client/src/runtime/core/errorRendering/throwValidationException.ts:46:9)
+    at zr.handleRequestError (/media/r-yvan/Personal Disk/Coding/National Exams/BraveNewWorld/Practice/2024-2025/Restful & Web Services/parking-mis/services/auth-service/node_modules/@prisma/client/src/runtime/RequestHandler.ts:211:7)
+    at zr.handleAndLogRequestError (/media/r-yvan/Personal Disk/Coding/National Exams/BraveNewWorld/Practice/2024-2025/Restful & Web Services/parking-mis/services/auth-service/node_modules/@prisma/client/src/runtime/RequestHandler.ts:183:12)
+    at zr.request (/media/r-yvan/Personal Disk/Coding/National Exams/BraveNewWorld/Practice/2024-2025/Restful & Web Services/parking-mis/services/auth-service/node_modules/@prisma/client/src/runtime/RequestHandler.ts:152:12)
+    at async a (/media/r-yvan/Personal Disk/Coding/National Exams/BraveNewWorld/Practice/2024-2025/Restful & Web Services/parking-mis/services/auth-service/node_modules/@prisma/client/src/runtime/getPrismaClient.ts:963:24) {
+  clientVersion: '7.8.0'
+}

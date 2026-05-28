@@ -18,7 +18,7 @@ export function AppLayout() {
 
   const navItems = [
     { name: "Dashboard", path: "/dashboard", icon: Home, show: true },
-    { name: "Parkings", path: "/parkings", icon: ParkingCircle, show: role === "ADMIN" },
+    { name: "Parkings", path: "/parkings", icon: ParkingCircle, show: true },
     { name: "Entries/Exits", path: "/entries", icon: Car, show: true },
     { name: "Reports", path: "/reports", icon: FileText, show: role === "ADMIN" },
   ];
