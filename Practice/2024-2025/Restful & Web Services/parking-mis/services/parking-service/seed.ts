@@ -2,7 +2,7 @@ import prisma from './src/config/database';
 
 async function main() {
   console.log("Seeding parkings...");
-  
+
   await prisma.parking.upsert({
     where: { code: 'P-001' },
     update: {},
